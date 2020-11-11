@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class MyResourceTest {
 
     @Test
-    public void testHelloEndpoint() {
+    public void testInvalidBody() {
         Response response = given()
                 .body("{\"value\":\"\"}")
                 .contentType(ContentType.JSON)
@@ -24,6 +24,17 @@ public class MyResourceTest {
 
         System.out.println(response.asString());
         assertEquals(400, response.getStatusCode());
+    }
+
+    @Test
+    public void testValidBody() {
+        Response response = given()
+                .body("{\"value\":\"not-blank\"}")
+                .contentType(ContentType.JSON)
+                .when().post("/hello");
+
+        System.out.println(response.asString());
+        assertEquals(200, response.getStatusCode());
     }
 
 }
